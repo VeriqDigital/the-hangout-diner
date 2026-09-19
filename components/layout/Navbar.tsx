@@ -1,75 +1,84 @@
-﻿"use client";
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Brand from "@/components/ui/Brand";
-import QuoteButton from "@/components/ui/QuoteButton";
-import { ArrowIcon, MapPinIcon } from "@/components/ui/Icons";
-import { navigation, siteConfig } from "@/config/site";
+import { ArrowIcon, MapPinIcon, PhoneIcon } from "@/components/ui/Icons";
+import { navigation, phoneHref } from "@/config/site";
 import { containDialogFocus } from "./dialogFocus";
-
-export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menu = useRef<HTMLDialogElement>(null);
+export default function Navbar({
+  phone,
+  address,
+  directions,
+}: {
+  phone: string;
+  address: string;
+  directions: string;
+}) {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   useEffect(() => {
-    if (!menuOpen) return;
-    const dialog = menu.current;
-    const menuTrigger = trigger.current;
+    if (!open) return;
+    const node = dialog.current;
+    const opener = trigger.current;
     const previousOverflow = document.body.style.overflow;
+    node?.showModal();
     document.body.style.overflow = "hidden";
-    dialog?.showModal();
-    const desktop = window.matchMedia("(min-width: 1100px)");
-    const handleResize = () => {
-      if (desktop.matches) setMenuOpen(false);
+    const desktop = window.matchMedia("(min-width: 900px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setOpen(false);
     };
-    desktop.addEventListener("change", handleResize);
+    desktop.addEventListener("change", closeOnDesktop);
     return () => {
-      dialog?.close();
+      node?.close();
       document.body.style.overflow = previousOverflow;
-      desktop.removeEventListener("change", handleResize);
-      menuTrigger?.focus({ preventScroll: true });
+      desktop.removeEventListener("change", closeOnDesktop);
+      opener?.focus();
     };
-  }, [menuOpen]);
-
+  }, [open]);
   return (
     <>
       <div className="utility-bar">
         <div className="site-container utility-inner">
-          <span>
-            <MapPinIcon className="size-3.5" />
-            Serving the Des Moines metro
-          </span>
-          <span className="utility-estimate">
-            Free personalized estimates <i />{" "}
-            <a href={siteConfig.contact.phoneHref}>
-              {siteConfig.contact.phone}
-            </a>
-          </span>
+          <span>FAMILY-OWNED. PERRY, IOWA.</span>
+          <a href={directions}>
+            <MapPinIcon />
+            {address}
+          </a>
         </div>
       </div>
       <header className="site-header">
         <div className="site-container nav-inner">
           <Brand />
-          <nav className="desktop-nav" aria-label="Primary navigation">
+          <nav className="desktop-nav" aria-label="Main navigation">
             {navigation.map((item) => (
-              <Link key={item.href} href={item.href}>
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={pathname === item.href ? "page" : undefined}
+              >
                 {item.label}
               </Link>
             ))}
           </nav>
           <div className="nav-actions">
-            <QuoteButton className="nav-quote">
-              <span className="desktop-quote-label">Get a Quote</span>
-              <span className="mobile-quote-label">Quote</span>
-            </QuoteButton>
+            <a className="nav-phone" href={phoneHref(phone)}>
+              <PhoneIcon />
+              <span>{phone}</span>
+            </a>
+            <Link href="/menu" className="button button-primary nav-menu">
+              View menu <ArrowIcon />
+            </Link>
             <button
-              ref={trigger}
               className="menu-toggle"
               type="button"
-              aria-label="Open navigation menu"
-              aria-expanded={menuOpen}
+              ref={trigger}
+              aria-label="Open navigation"
+              aria-expanded={open}
               aria-controls="mobile-navigation"
-              onClick={() => setMenuOpen(true)}
+              onClick={() => setOpen(true)}
             >
               <span />
               <span />
@@ -77,54 +86,48 @@ export default function Navbar() {
           </div>
         </div>
       </header>
-      {menuOpen && (
+      {open && (
         <dialog
-          ref={menu}
+          ref={dialog}
           id="mobile-navigation"
           className="mobile-menu"
-          aria-labelledby="menu-title"
-          onCancel={() => setMenuOpen(false)}
+          aria-labelledby="mobile-menu-title"
+          onCancel={() => setOpen(false)}
           onKeyDown={containDialogFocus}
         >
           <div className="mobile-menu-top">
-            <p id="menu-title" className="eyebrow">
-              A lighter week starts here
+            <p id="mobile-menu-title" className="eyebrow">
+              The Hangout Diner
             </p>
             <button
-              className="icon-button"
-              aria-label="Close navigation menu"
-              onClick={() => setMenuOpen(false)}
+              autoFocus
+              className="close-menu"
+              onClick={() => setOpen(false)}
+              aria-label="Close navigation"
             >
               ×
             </button>
           </div>
           <nav aria-label="Mobile navigation">
-            {navigation.map((item, i) => (
+            {navigation.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setMenuOpen(false)}
+                aria-current={pathname === item.href ? "page" : undefined}
+                onClick={() => setOpen(false)}
               >
-                <span>
-                  <small>0{i + 1}</small>
-                  {item.label}
-                </span>
+                {item.label}
                 <ArrowIcon />
               </Link>
             ))}
-            <Link href="/contact" onClick={() => setMenuOpen(false)}>
-              <span>
-                <small>06</small>Contact
-              </span>
-              <ArrowIcon />
-            </Link>
           </nav>
           <div className="mobile-menu-bottom">
-            <p>Good care. Close to home.</p>
-            <a href={siteConfig.contact.phoneHref}>
-              {siteConfig.contact.phone}
+            <p>Come hungry. Stay awhile.</p>
+            <a href={phoneHref(phone)}>{phone}</a>
+            <a href={directions}>
+              {address}
+              <ArrowIcon />
             </a>
-            <span>West Des Moines, Iowa</span>
           </div>
         </dialog>
       )}

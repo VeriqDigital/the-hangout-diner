@@ -1,67 +1,51 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
-import LeadProvider from "@/components/layout/LeadProvider";
-import { siteConfig } from "@/config/site";
+import { isPublicSite, siteConfig, siteUrl } from "@/config/site";
 import "./globals.css";
-
-const manrope = localFont({
+const bodyFont = localFont({
   src: "./fonts/manrope-latin.woff2",
-  variable: "--font-manrope",
+  variable: "--font-body",
   weight: "200 800",
   display: "swap",
 });
-const jakarta = localFont({
-  src: "./fonts/plus-jakarta-sans-latin.woff2",
+const displayFont = localFont({
+  src: "./fonts/fraunces-bold.ttf",
   variable: "--font-display",
-  weight: "200 800",
+  weight: "700",
   display: "swap",
 });
-const defaultTitle =
-  "Sparkle & Shine | A Cleaner Home. A Lighter Week. | Website Concept";
-
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl || "http://localhost:3000"),
   title: {
-    default: defaultTitle,
-    template: `%s | ${siteConfig.shortName} · Website Concept`,
+    default: "The Hangout Diner | Family-Owned Diner in Perry, Iowa",
+    template: "%s | The Hangout Diner",
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
-  robots: {
-    index: false,
-    follow: false,
-    googleBot: { index: false, follow: false, noimageindex: true },
-  },
+  robots: { index: isPublicSite, follow: isPublicSite },
   openGraph: {
-    title: defaultTitle,
+    title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    locale: siteConfig.locale,
+    locale: "en_US",
     type: "website",
   },
   twitter: {
-    card: "summary",
-    title: defaultTitle,
+    card: "summary_large_image",
+    title: siteConfig.name,
     description: siteConfig.description,
   },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${jakarta.variable}`}>
-      <body>
-        <LeadProvider>
-          <a className="skip-link" href="#main-content">
-            Skip to content
-          </a>
-          <Navbar />
-          {children}
-          <Footer />
-        </LeadProvider>
-      </body>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${bodyFont.variable} ${displayFont.variable}`}
+    >
+      <body>{children}</body>
     </html>
   );
 }

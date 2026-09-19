@@ -1,6 +1,7 @@
-import { type SchemaTypeDefinition } from 'sanity'
-import {serviceType} from './service'
-
-export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [serviceType],
-}
+import { menuCategory } from "./menuCategory";
+import { menuItem } from "./menuItem";
+import { announcement } from "./announcement";
+import { siteSettings } from "./siteSettings";
+export const schema = {
+  types: [menuCategory, menuItem, announcement, siteSettings],
+};
