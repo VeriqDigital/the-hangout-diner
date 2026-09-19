@@ -34,9 +34,3 @@ export const PhoneIcon = (props: Props) => (
     <path d="m7 3 3 5-3 3a17 17 0 0 0 6 6l3-3 5 3c-1 6-5 5-9 3S4 14 3 9 3 3 7 3Z" />
   </Icon>
 );
-export const ClockIcon = (props: Props) => (
-  <Icon {...props}>
-    <circle cx="12" cy="12" r="9" />
-    <path d="M12 6v6l4 2" />
-  </Icon>
-);

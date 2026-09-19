@@ -17,14 +17,10 @@ export default function Footer({ business }: { business: BusinessInfo }) {
           <div className="footer-main">
             <div>
               <Brand />
-              <p>
-                Food. Family. Friends.
-                <br />
-                Your local hangout in Perry, Iowa.
-              </p>
+              <p>Family-owned in Perry, Iowa.</p>
             </div>
             <div>
-              <h2>Come on over</h2>
+              <h2>Visit</h2>
               <a href={directions}>
                 {business.address.street}
                 <br />
@@ -36,7 +32,7 @@ export default function Footer({ business }: { business: BusinessInfo }) {
               </a>
             </div>
             <nav aria-label="Footer navigation">
-              <h2>Pull up a chair</h2>
+              <h2>Explore</h2>
               {navigation
                 .filter((item) => item.href !== "/")
                 .map((item) => (
@@ -44,10 +40,9 @@ export default function Footer({ business }: { business: BusinessInfo }) {
                     {item.label}
                   </Link>
                 ))}
-              <Link href="/contact#hours">Hours</Link>
             </nav>
             <div>
-              <h2>Keep in touch</h2>
+              <h2>Follow us</h2>
               {business.facebookUrl && (
                 <a href={business.facebookUrl}>
                   Facebook <ArrowIcon />
@@ -58,7 +53,6 @@ export default function Footer({ business }: { business: BusinessInfo }) {
                   Instagram <ArrowIcon />
                 </a>
               )}
-              <p>Find the latest from the diner.</p>
             </div>
           </div>
           <div className="footer-bottom">

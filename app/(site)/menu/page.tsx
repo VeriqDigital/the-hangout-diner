@@ -7,35 +7,31 @@ import Photo from "@/components/restaurant/Photo";
 import { ArrowIcon, PhoneIcon } from "@/components/ui/Icons";
 export const metadata = pageMetadata(
   "Our Menu",
-  "Explore The Hangout Diner menu in Perry, Iowa. Breakfast, burgers, sandwiches, and diner comfort food. Call for today’s selection.",
+  "Explore The Hangout Diner menu in Perry, Iowa. Breakfast, burgers, sandwiches, and comfort food. Call for today’s selection.",
   "/menu",
 );
+
 export default async function MenuPage() {
   const data = await getRestaurantData();
   return (
     <main id="main-content">
-      <section className="page-intro menu-intro">
+      <header className="page-intro menu-intro">
         <div className="site-container">
-          <p className="eyebrow">THE HANGOUT DINER · PERRY, IOWA</p>
-          <h1>
-            Something
-            <br />
-            to <em>look forward to.</em>
-          </h1>
-          <p>Come hungry. Find your next favorite.</p>
+          <h1>Our menu</h1>
         </div>
-      </section>
+      </header>
       <Announcements announcements={data.announcements} />
-      <section className="section menu-page">
+      <section className="section menu-page" aria-label="Dishes and categories">
         <div className="site-container">
           {data.menuState === "preview" && (
-            <div className="menu-notice">
-              <span className="eyebrow">A TASTE OF THE MENU</span>
-              <p>
-                A few dishes from our existing menu. The full menu and current
-                prices are coming soon. Give us a call for today’s selection.
-              </p>
-            </div>
+            <p className="menu-notice">
+              A selection from our menu. For the full menu, current prices, and
+              today’s specials,{" "}
+              <a href={phoneHref(data.settings.phone)}>
+                call {data.settings.phone}
+              </a>
+              .
+            </p>
           )}
           {data.categories.length ? (
             <>
@@ -43,15 +39,11 @@ export default async function MenuPage() {
                 {data.categories.map((category) => (
                   <a key={category._id} href={`#category-${category.slug}`}>
                     {category.name}
-                    <span>↓</span>
+                    <span aria-hidden="true">↓</span>
                   </a>
                 ))}
               </nav>
               <div className="menu-paper">
-                <div className="menu-paper-top">
-                  <span>THE HANGOUT DINER</span>
-                  <span>FOOD · FAMILY · FRIENDS</span>
-                </div>
                 {data.categories.map((category) => (
                   <section
                     className="menu-category"
@@ -75,11 +67,15 @@ export default async function MenuPage() {
                           <div className="menu-item-copy">
                             <div className="menu-item-title">
                               <h3>{item.name}</h3>
-                              <span
-                                className="menu-leader"
-                                aria-hidden="true"
-                              />
-                              {item.price && <strong>{item.price}</strong>}
+                              {item.price && (
+                                <>
+                                  <span
+                                    className="menu-leader"
+                                    aria-hidden="true"
+                                  />
+                                  <strong>{item.price}</strong>
+                                </>
+                              )}
                             </div>
                             {item.description && <p>{item.description}</p>}
                           </div>
@@ -88,31 +84,22 @@ export default async function MenuPage() {
                     </div>
                   </section>
                 ))}
-                <div className="menu-paper-bottom">
-                  <span aria-hidden="true">✳</span>
-                  <p>Good food. Good company. Right here in Perry.</p>
-                  <span aria-hidden="true">✳</span>
-                </div>
               </div>
             </>
           ) : (
             <div className="menu-empty">
-              <p className="eyebrow">LET’S TALK FOOD</p>
               <h2>
                 {data.menuState === "unavailable"
-                  ? "The online menu is taking a break."
-                  : "The menu is on its way."}
+                  ? "The online menu is unavailable right now."
+                  : "Call for the full menu."}
               </h2>
-              <p>
-                Call the diner for today’s menu, prices, and specials. We’ll
-                help you find something good.
-              </p>
+              <p>We can help with current dishes, prices, and specials.</p>
             </div>
           )}
           <div className="menu-help">
             <div>
-              <h2>A question before you order?</h2>
-              <p>Ask us about today’s availability or dietary needs.</p>
+              <h2>Menu questions?</h2>
+              <p>Call about availability or dietary needs.</p>
             </div>
             <a
               className="button button-primary"
@@ -122,7 +109,7 @@ export default async function MenuPage() {
               {data.settings.phone}
             </a>
             <Link className="text-link" href="/contact">
-              Plan your visit <ArrowIcon />
+              Visit & hours <ArrowIcon />
             </Link>
           </div>
         </div>

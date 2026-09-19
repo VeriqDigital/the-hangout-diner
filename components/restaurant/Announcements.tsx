@@ -11,7 +11,7 @@ export default function Announcements({
   return (
     <section className="announcements" aria-labelledby="announcements-title">
       <div className="site-container">
-        <p className="eyebrow" id="announcements-title">
+        <p className="announcement-label" id="announcements-title">
           Today at The Hangout
         </p>
         {announcements.map((item) => (

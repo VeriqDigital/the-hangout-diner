@@ -2,20 +2,22 @@ import { addressText, directionsUrl, phoneHref } from "@/config/site";
 import type { BusinessInfo } from "@/sanity/lib/types";
 import Hours from "./Hours";
 import { ArrowIcon, PhoneIcon } from "@/components/ui/Icons";
-export default function Visit({ business }: { business: BusinessInfo }) {
+
+export default function Visit({
+  business,
+  showSocial = false,
+  heading = "Visit us in Perry.",
+}: {
+  business: BusinessInfo;
+  showSocial?: boolean;
+  heading?: string;
+}) {
   return (
     <section className="visit-section section" id="hours">
       <div className="site-container visit-grid">
         <div className="visit-copy">
-          <p className="eyebrow">We’ll save you a seat</p>
-          <h2>
-            See you
-            <br />
-            on 2nd Street.
-          </h2>
+          <h2>{heading}</h2>
           <address>
-            <strong>The Hangout Diner</strong>
-            <br />
             {business.address.street}
             <br />
             {business.address.city}, {business.address.state}{" "}
@@ -33,12 +35,24 @@ export default function Visit({ business }: { business: BusinessInfo }) {
               {business.phone}
             </a>
           </div>
+          {showSocial && (business.facebookUrl || business.instagramUrl) && (
+            <div className="visit-social">
+              <p>Updates from the diner</p>
+              {business.facebookUrl && (
+                <a className="text-link" href={business.facebookUrl}>
+                  Facebook <ArrowIcon />
+                </a>
+              )}
+              {business.instagramUrl && (
+                <a className="text-link" href={business.instagramUrl}>
+                  Instagram <ArrowIcon />
+                </a>
+              )}
+            </div>
+          )}
         </div>
         <div className="hours-panel">
-          <div className="hours-heading">
-            <h3>Come by when we’re open.</h3>
-            <span>PERRY, IA</span>
-          </div>
+          <h3 className="hours-heading">Opening hours</h3>
           <Hours hours={business.hours} phone={business.phone} />
         </div>
       </div>

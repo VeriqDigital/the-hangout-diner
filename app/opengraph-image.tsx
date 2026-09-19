@@ -34,7 +34,7 @@ export default function OpenGraphImage() {
         <span>Stay awhile.</span>
       </div>
       <div style={{ display: "flex", fontSize: 28 }}>
-        Food. Family. Friends. · 1014 2nd St
+        1014 2nd St, Perry, IA · (515) 979-3385
       </div>
     </div>,
     size,

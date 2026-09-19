@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "The Hangout Diner",
   description:
-    "Family-owned comfort food in Perry, Iowa. Stop by The Hangout Diner for breakfast, burgers, sandwiches, and a seat at the table.",
+    "Family-owned diner in Perry, Iowa. See the menu and hours, get directions to 1014 2nd St, or call (515) 979-3385.",
   phone: "(515) 979-3385",
   address: { street: "1014 2nd St", city: "Perry", state: "IA", zip: "50220" },
   facebookUrl: "https://www.facebook.com/profile.php?id=61568496936798",
@@ -12,8 +12,8 @@ export const siteConfig = {
 export const navigation = [
   { label: "Home", href: "/" },
   { label: "Menu", href: "/menu" },
-  { label: "Our story", href: "/about" },
-  { label: "Visit us", href: "/contact" },
+  { label: "About", href: "/about" },
+  { label: "Visit & hours", href: "/contact" },
 ];
 export const days = [
   "Monday",

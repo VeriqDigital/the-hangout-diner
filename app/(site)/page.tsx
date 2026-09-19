@@ -1,7 +1,7 @@
 import Hero from "@/components/restaurant/Hero";
 import Announcements from "@/components/restaurant/Announcements";
 import MenuPreview from "@/components/restaurant/MenuPreview";
-import LocalLove from "@/components/restaurant/LocalLove";
+import Reviews from "@/components/restaurant/Reviews";
 import Story from "@/components/restaurant/Story";
 import Visit from "@/components/restaurant/Visit";
 import StructuredData from "@/components/restaurant/StructuredData";
@@ -18,21 +18,9 @@ export default async function Home() {
     <main id="main-content">
       <StructuredData business={data.settings} />
       <Hero business={data.settings} />
-      <div
-        className="diner-ribbon"
-        aria-label="Breakfast, lunch, dinner, and good company"
-      >
-        <span>BREAKFAST</span>
-        <i aria-hidden="true">✳</i>
-        <span>LUNCH</span>
-        <i aria-hidden="true">✳</i>
-        <span>DINNER</span>
-        <i aria-hidden="true">✳</i>
-        <span>GOOD COMPANY</span>
-      </div>
       <Announcements announcements={data.announcements} />
       <MenuPreview data={data} />
-      <LocalLove business={data.settings} />
+      <Reviews business={data.settings} />
       <Story business={data.settings} />
       <Visit business={data.settings} />
     </main>

@@ -29,7 +29,7 @@ npm start
 
 The public shell lives in `app/(site)`. Server components read published content through `sanity/lib/content.ts`. Only mobile navigation needs client-side application state. Native dialogs support keyboard focus containment, Escape, scroll locking, and focus restoration. Phone/menu/directions remain accessible in the mobile action bar.
 
-The visual system uses locally hosted Fraunces and Manrope, cream backgrounds, deep plum accents, and restrained diner typography. CSS is in `app/globals.css`; font licenses are in `app/fonts`. No external font requests or animation libraries are needed.
+The visual system uses locally hosted Fraunces and Manrope, cream backgrounds, deep plum accents, and restrained diner typography. The refinement pass removes decorative category strips, repeated photo captions, most eyebrow labels, and padded story sections. The homepage category links now use the actual menu data and target the corresponding menu section. Only the hero retains a small brand badge; additional food photography comes from published featured dishes. CSS is in `app/globals.css`; font licenses are in `app/fonts`. No external font requests or animation libraries are needed.
 
 ## Sanity setup
 
@@ -92,13 +92,13 @@ Restaurant JSON-LD includes the supplied business name, phone, address, social l
 
 Six content tests exercise announcement boundaries/timezones, missing/split hours, edited schedules, link validation/directions, and the actual GROQ query's ordering/availability rules. Local browser artifacts and tools live under ignored `.qa/` and are not application dependencies.
 
-Browser review covers home/menu/about/contact at 320, 390, and 768 pixels, plus desktop at 1440. Automated WCAG A/AA checks cover all four public pages, the Studio setup state, and the 404 page; mobile dialog and category-link interactions are checked too.
+Browser review covers home/menu/about/contact at 320, 390, 768, 1024, 1280, 1440, and 1920 pixels. Automated WCAG A/AA checks cover all four public pages, the Studio setup state, and the 404 page; mobile dialog and category-link interactions are checked too.
 
 Before presenting/launching:
 
 1. Review the concept with the supplied split hours; confirm Sunday and holiday hours with Christina.
 2. Get the complete current menu, prices, any real specials, and dietary information she wants listed.
-3. Replace repeated food photography with a small set of approved, high-resolution restaurant images.
+3. Supply a small set of approved, high-resolution food photos for featured dishes.
 4. Connect the intended Sanity project, publish content, and verify editor login/CORS and the real published-content workflow.
 5. Verify current Google review figures and any exact testimonials before publishing them.
 6. Set the real hosted URL for social previews. Keep indexing off while it is a sales concept.

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Brand from "@/components/ui/Brand";
-import { ArrowIcon, MapPinIcon, PhoneIcon } from "@/components/ui/Icons";
+import { ArrowIcon, PhoneIcon } from "@/components/ui/Icons";
 import { navigation, phoneHref } from "@/config/site";
 import { containDialogFocus } from "./dialogFocus";
 export default function Navbar({
@@ -40,15 +40,6 @@ export default function Navbar({
   }, [open]);
   return (
     <>
-      <div className="utility-bar">
-        <div className="site-container utility-inner">
-          <span>FAMILY-OWNED. PERRY, IOWA.</span>
-          <a href={directions}>
-            <MapPinIcon />
-            {address}
-          </a>
-        </div>
-      </div>
       <header className="site-header">
         <div className="site-container nav-inner">
           <Brand />
@@ -64,7 +55,11 @@ export default function Navbar({
             ))}
           </nav>
           <div className="nav-actions">
-            <a className="nav-phone" href={phoneHref(phone)}>
+            <a
+              className="nav-phone"
+              href={phoneHref(phone)}
+              aria-label={`Call ${phone}`}
+            >
               <PhoneIcon />
               <span>{phone}</span>
             </a>
@@ -96,8 +91,8 @@ export default function Navbar({
           onKeyDown={containDialogFocus}
         >
           <div className="mobile-menu-top">
-            <p id="mobile-menu-title" className="eyebrow">
-              The Hangout Diner
+            <p id="mobile-menu-title" className="mobile-menu-label">
+              Navigation
             </p>
             <button
               autoFocus
@@ -122,7 +117,6 @@ export default function Navbar({
             ))}
           </nav>
           <div className="mobile-menu-bottom">
-            <p>Come hungry. Stay awhile.</p>
             <a href={phoneHref(phone)}>{phone}</a>
             <a href={directions}>
               {address}

@@ -16,13 +16,7 @@ export default function Photo({
   preload?: boolean;
 }) {
   const src = imageUrl(image) || fallback;
-  if (!src)
-    return (
-      <div className={`photo-placeholder ${className}`}>
-        <span aria-hidden="true">✳</span>
-        <p>The Hangout Diner</p>
-      </div>
-    );
+  if (!src) return null;
   return (
     <div className={`photo ${className}`}>
       <Image
